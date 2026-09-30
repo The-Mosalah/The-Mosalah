@@ -54,7 +54,7 @@ A concise view of my experience, technical focus, selected work, and résumé. [
 <sub>Internal transfer from vivo Egypt to vivo Türkiye in June 2024.</sub>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/mahmoud-vtech.jpg" alt="Mahmoud Salah at VTech" width="420" />
+  <img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/experience-card.svg" alt="Mahmoud Salah at VTech — animated field-note frame" width="420" />
 </p>
 <p align="center"><sub>Professional experience in smartphone hardware and electronics repair.</sub></p>
 
