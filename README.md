@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://the-mosalah.github.io/The-Mosalah/"><img src="https://img.shields.io/badge/Portfolio-081a36?style=flat-square&labelColor=c9803f&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>
   <a href="https://the-mosalah.github.io/The-Mosalah/assets/Mahmoud_Salah_Resume.pdf"><img src="https://img.shields.io/badge/Download_CV-PDF-081a36?style=flat-square&labelColor=c9803f&logo=adobeacrobatreader&logoColor=white" alt="Download CV" /></a>
-  <a href="https://linkedin.com/in/mosala7"><img src="https://img.shields.io/badge/LinkedIn-mosala7-081a36?style=flat-square&labelColor=c9803f&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  <a href="https://linkedin.com/in/the-mosalah"><img src="https://img.shields.io/badge/LinkedIn-mosala7-081a36?style=flat-square&labelColor=c9803f&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
 </p>
 
 <p align="center">
@@ -60,7 +60,7 @@ A concise view of my experience, technical focus, selected work, and résumé. [
 <p align="center"><sub>Professional experience in smartphone hardware and electronics repair.</sub></p>
 
 <p align="center">
-  <a href="https://linkedin.com/in/mosala7"><strong>Connect on LinkedIn →</strong></a>
+  <a href="https://linkedin.com/in/the-mosalah"><strong>Connect on LinkedIn →</strong></a>
   &nbsp;·&nbsp;
   <a href="https://the-mosalah.github.io/The-Mosalah/"><strong>View full portfolio →</strong></a>
 </p>
