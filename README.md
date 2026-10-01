@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <a href="https://the-mosalah.github.io/Who-Am-I/"><img src="https://img.shields.io/badge/Portfolio-081a36?style=flat-square&labelColor=c9803f&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>
-  <a href="https://the-mosalah.github.io/Who-Am-I/assets/Mahmoud_Salah_Resume.pdf"><img src="https://img.shields.io/badge/Download_CV-PDF-081a36?style=flat-square&labelColor=c9803f&logo=adobeacrobatreader&logoColor=white" alt="Download CV" /></a>
+  <a href="https://the-mosalah.github.io/The-Mosalah/"><img src="https://img.shields.io/badge/Portfolio-081a36?style=flat-square&labelColor=c9803f&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>
+  <a href="https://the-mosalah.github.io/The-Mosalah/assets/Mahmoud_Salah_Resume.pdf"><img src="https://img.shields.io/badge/Download_CV-PDF-081a36?style=flat-square&labelColor=c9803f&logo=adobeacrobatreader&logoColor=white" alt="Download CV" /></a>
   <a href="https://linkedin.com/in/mosala7"><img src="https://img.shields.io/badge/LinkedIn-mosala7-081a36?style=flat-square&labelColor=c9803f&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
 </p>
 
@@ -21,7 +21,7 @@ I investigate smartphone motherboard faults, trace power and signal problems, pe
 
 ## Portfolio
 
-**[Visit my portfolio website →](https://the-mosalah.github.io/Who-Am-I/)**  
+**[Visit my portfolio website →](https://the-mosalah.github.io/The-Mosalah/)**  
 A concise view of my experience, technical focus, selected work, and résumé. [Portfolio notes →](https://github.com/The-Mosalah/The-Mosalah/blob/main/PORTFOLIO.md)
 
 ## Technical focus
@@ -62,5 +62,5 @@ A concise view of my experience, technical focus, selected work, and résumé. [
 <p align="center">
   <a href="https://linkedin.com/in/mosala7"><strong>Connect on LinkedIn →</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://the-mosalah.github.io/Who-Am-I/"><strong>View full portfolio →</strong></a>
+  <a href="https://the-mosalah.github.io/The-Mosalah/"><strong>View full portfolio →</strong></a>
 </p>
