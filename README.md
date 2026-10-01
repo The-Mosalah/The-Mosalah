@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/banner.svg" alt="Mahmoud Salah — Electronics Failure Analysis Engineer" width="100%" />
+  <img src="https://raw.githubusercontent.com/The-Mosalah/The-Mosalah/main/assets/banner.svg" alt="Mahmoud Salah — Electronics Failure Analysis Engineer" width="100%" />
 </p>
 
 <p align="center">
-  <a href="https://the-mosalah.github.io/Who-Am-I/"><img src="https://img.shields.io/badge/Portfolio-081a36?style=flat-square&labelColor=c9803f&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>
-  <a href="https://the-mosalah.github.io/Who-Am-I/assets/Mahmoud_Salah_Resume.pdf"><img src="https://img.shields.io/badge/Download_CV-PDF-081a36?style=flat-square&labelColor=c9803f&logo=adobeacrobatreader&logoColor=white" alt="Download CV" /></a>
+  <a href="https://the-mosalah.github.io/The-Mosalah/"><img src="https://img.shields.io/badge/Portfolio-081a36?style=flat-square&labelColor=c9803f&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>
+  <a href="https://the-mosalah.github.io/The-Mosalah/assets/Mahmoud_Salah_Resume.pdf"><img src="https://img.shields.io/badge/Download_CV-PDF-081a36?style=flat-square&labelColor=c9803f&logo=adobeacrobatreader&logoColor=white" alt="Download CV" /></a>
   <a href="https://linkedin.com/in/mosala7"><img src="https://img.shields.io/badge/LinkedIn-mosala7-081a36?style=flat-square&labelColor=c9803f&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
 </p>
 
@@ -17,12 +17,12 @@ I investigate smartphone motherboard faults, trace power and signal problems, pe
 
 > Open to electronics failure-analysis and hardware-engineering opportunities.
 
-<img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/power-circuit-map.svg" alt="Technical focus: failure analysis, power domains, PCB rework and quality" width="100%" />
+<img src="https://raw.githubusercontent.com/The-Mosalah/The-Mosalah/main/assets/power-circuit-map.svg" alt="Technical focus: failure analysis, power domains, PCB rework and quality" width="100%" />
 
 ## Portfolio
 
-**[Visit my portfolio website →](https://the-mosalah.github.io/Who-Am-I/)**  
-A concise view of my experience, technical focus, selected work, and résumé. [Portfolio notes →](https://github.com/The-Mosalah/Who-Am-I/blob/main/PORTFOLIO.md)
+**[Visit my portfolio website →](https://the-mosalah.github.io/The-Mosalah/)**  
+A concise view of my experience, technical focus, selected work, and résumé. [Portfolio notes →](https://github.com/The-Mosalah/The-Mosalah/blob/main/PORTFOLIO.md)
 
 ## Technical focus
 
@@ -41,7 +41,7 @@ A concise view of my experience, technical focus, selected work, and résumé. [
 
 ## How I approach a fault
 
-<img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/flow.svg" alt="Observe, measure, isolate, verify" width="100%" />
+<img src="https://raw.githubusercontent.com/The-Mosalah/The-Mosalah/main/assets/flow.svg" alt="Observe, measure, isolate, verify" width="100%" />
 
 ## Experience
 
@@ -54,13 +54,13 @@ A concise view of my experience, technical focus, selected work, and résumé. [
 <sub>Internal transfer from vivo Egypt to vivo Türkiye in June 2024.</sub>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/field-note-frame.svg" alt="Animated field-note circuit frame" width="528" /><br>
-  <img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/field-note-rail-left.svg" alt="" width="48" height="236" /><img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/mahmoud-vtech.jpg" alt="Mahmoud Salah at VTech" width="420" /><img src="https://raw.githubusercontent.com/The-Mosalah/Who-Am-I/main/assets/field-note-rail-right.svg" alt="" width="48" height="236" />
+  <img src="https://raw.githubusercontent.com/The-Mosalah/The-Mosalah/main/assets/field-note-frame.svg" alt="Animated field-note circuit frame" width="528" /><br>
+  <img src="https://raw.githubusercontent.com/The-Mosalah/The-Mosalah/main/assets/field-note-rail-left.svg" alt="" width="48" height="236" /><img src="https://raw.githubusercontent.com/The-Mosalah/The-Mosalah/main/assets/mahmoud-vtech.jpg" alt="Mahmoud Salah at VTech" width="420" /><img src="https://raw.githubusercontent.com/The-Mosalah/The-Mosalah/main/assets/field-note-rail-right.svg" alt="" width="48" height="236" />
 </p>
 <p align="center"><sub>Professional experience in smartphone hardware and electronics repair.</sub></p>
 
 <p align="center">
   <a href="https://linkedin.com/in/mosala7"><strong>Connect on LinkedIn →</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://the-mosalah.github.io/Who-Am-I/"><strong>View full portfolio →</strong></a>
+  <a href="https://the-mosalah.github.io/The-Mosalah/"><strong>View full portfolio →</strong></a>
 </p>

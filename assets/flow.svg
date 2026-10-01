@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Repair and rework flow: inspect, diagnose, isolate, rework, verify" xmlns:c2pa="http://c2pa.org/manifest">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#1a2432" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0f16"/>
+      <stop offset="1" stop-color="#0d141d"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      text { font-family: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace; }
+      .title { fill: #e8eef7; font-size: 22px; font-weight: 700; letter-spacing: 3px; }
+      .sub { fill: #6f8299; font-size: 12px; letter-spacing: 2px; }
+      .num { font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+      .h { fill: #e8eef7; font-size: 16px; font-weight: 700; letter-spacing: 1px; }
+      .d { fill: #8ea2b8; font-size: 11.5px; }
+      .st { font-size: 13px; letter-spacing: 2px; }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="400" rx="16" fill="url(#bg)"/>
+  <rect width="1200" height="400" rx="16" fill="url(#grid)" opacity="0.6"/>
+  <rect x="0.5" y="0.5" width="1199" height="399" rx="16" fill="none" stroke="#223247"/>
+
+  <!-- header -->
+  <text x="40" y="52" class="title">REPAIR &amp; REWORK FLOW</text>
+  <text x="40" y="76" class="sub">FROM DEAD BOARD TO VERIFIED REPAIR</text>
+  <circle cx="1146" cy="46" r="5" fill="#4da3ff" filter="url(#glow)">
+    <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="1130" y="50" text-anchor="end" class="sub">LIVE</text>
+
+  <!-- dim base line -->
+  <line x1="120" y1="205" x2="1080" y2="205" stroke="#1f2d3f" stroke-width="3"/>
+
+  <!-- 01 INSPECT -->
+  <g>
+    <rect x="20" y="130" width="200" height="150" rx="14" fill="#0e1722" stroke="#4da3ff" stroke-width="2" stroke-opacity="0.3">
+      <animate attributeName="stroke-opacity" values="1;1;0.3;0.3" keyTimes="0;0.19;0.21;1" dur="15s" repeatCount="indefinite"/>
+    </rect>
+    <text x="38" y="160" class="num" fill="#4da3ff">01</text>
+    <g transform="translate(190 158)" stroke="#4da3ff" stroke-width="2" fill="none" stroke-linecap="round">
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0 0;3 2;-2 -1;0 0" dur="3s" repeatCount="indefinite"/>
+        <circle cx="-3" cy="-3" r="8"/>
+        <line x1="3" y1="3" x2="11" y2="11"/>
+        <circle cx="-3" cy="-3" r="2" fill="#4da3ff" stroke="none">
+          <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </g>
+    <text x="38" y="215" class="h">INSPECT</text>
+    <text x="38" y="240" class="d">Microscope check for</text>
+    <text x="38" y="257" class="d">damage and corrosion.</text>
+  </g>
+
+  <!-- 02 DIAGNOSE -->
+  <g>
+    <rect x="260" y="130" width="200" height="150" rx="14" fill="#0e1722" stroke="#4da3ff" stroke-width="2" stroke-opacity="0.3">
+      <animate attributeName="stroke-opacity" values="0.3;0.3;1;1;0.3;0.3" keyTimes="0;0.19;0.21;0.39;0.41;1" dur="15s" repeatCount="indefinite"/>
+    </rect>
+    <text x="278" y="160" class="num" fill="#4da3ff">02</text>
+    <g transform="translate(430 158)" stroke="#4da3ff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-16 0H-9L-5 -9L1 9L5 0H16" stroke-opacity="0.25"/>
+      <path d="M-16 0H-9L-5 -9L1 9L5 0H16" pathLength="100" stroke-dasharray="35 65" filter="url(#glow)">
+        <animate attributeName="stroke-dashoffset" from="35" to="-65" dur="1.8s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <text x="278" y="215" class="h">DIAGNOSE</text>
+    <text x="278" y="240" class="d">Bench supply, current</text>
+    <text x="278" y="257" class="d">draw and rail checks.</text>
+  </g>
+
+  <!-- 03 ISOLATE -->
+  <g>
+    <rect x="500" y="130" width="200" height="150" rx="14" fill="#0e1722" stroke="#f5c04a" stroke-width="2" stroke-opacity="0.3">
+      <animate attributeName="stroke-opacity" values="0.3;0.3;1;1;0.3;0.3" keyTimes="0;0.39;0.41;0.59;0.61;1" dur="15s" repeatCount="indefinite"/>
+    </rect>
+    <text x="518" y="160" class="num" fill="#f5c04a">03</text>
+    <g transform="translate(670 158)" stroke="#f5c04a" stroke-width="2" fill="none" stroke-linecap="round">
+      <circle r="9">
+        <animate attributeName="r" values="11;6;9;9;11" keyTimes="0;0.25;0.35;0.9;1" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="2" fill="#f5c04a" stroke="none">
+        <animate attributeName="opacity" values="0.2;1;0.2" dur="1s" repeatCount="indefinite"/>
+      </circle>
+      <path d="M-15 0H-5M5 0H15M0 -15V-5M0 5V15">
+        <animateTransform attributeName="transform" type="rotate" values="45;0;0;45" keyTimes="0;0.3;0.9;1" dur="3s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <text x="518" y="215" class="h">ISOLATE</text>
+    <text x="518" y="240" class="d">Thermal and schematic</text>
+    <text x="518" y="257" class="d">to find the bad part.</text>
+  </g>
+
+  <!-- 04 REWORK -->
+  <g>
+    <rect x="740" y="130" width="200" height="150" rx="14" fill="#0e1722" stroke="#ff7a3d" stroke-width="2" stroke-opacity="0.3">
+      <animate attributeName="stroke-opacity" values="0.3;0.3;1;1;0.3;0.3" keyTimes="0;0.59;0.61;0.79;0.81;1" dur="15s" repeatCount="indefinite"/>
+    </rect>
+    <text x="758" y="160" class="num" fill="#ff7a3d">04</text>
+    <!-- BGA ball grid heating up -->
+    <g transform="translate(910 158)" fill="#ff7a3d">
+      <circle cx="-9" cy="-9" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="0s" repeatCount="indefinite"/></circle>
+      <circle cx="0" cy="-9" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="0.2s" repeatCount="indefinite"/></circle>
+      <circle cx="9" cy="-9" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="0.4s" repeatCount="indefinite"/></circle>
+      <circle cx="-9" cy="0" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="0.6s" repeatCount="indefinite"/></circle>
+      <circle cx="0" cy="0" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="0.8s" repeatCount="indefinite"/></circle>
+      <circle cx="9" cy="0" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="1s" repeatCount="indefinite"/></circle>
+      <circle cx="-9" cy="9" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="1.2s" repeatCount="indefinite"/></circle>
+      <circle cx="0" cy="9" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="1.4s" repeatCount="indefinite"/></circle>
+      <circle cx="9" cy="9" r="2.6"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.8s" begin="1.6s" repeatCount="indefinite"/></circle>
+    </g>
+    <text x="758" y="215" class="h">REWORK</text>
+    <text x="758" y="240" class="d">Hot air, reballing and</text>
+    <text x="758" y="257" class="d">component swap.</text>
+  </g>
+
+  <!-- 05 VERIFY -->
+  <g>
+    <rect x="980" y="130" width="200" height="150" rx="14" fill="#0e1722" stroke="#3ddc97" stroke-width="2" stroke-opacity="0.3">
+      <animate attributeName="stroke-opacity" values="0.3;0.3;1;1" keyTimes="0;0.79;0.81;1" dur="15s" repeatCount="indefinite"/>
+    </rect>
+    <text x="998" y="160" class="num" fill="#3ddc97">05</text>
+    <g transform="translate(1150 158)" stroke="#3ddc97" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <circle r="13" stroke-opacity="0.4"/>
+      <path d="M-6 0L-2 5L6 -5" pathLength="100" stroke-dasharray="100" filter="url(#glow)">
+        <animate attributeName="stroke-dashoffset" values="100;0;0;100" keyTimes="0;0.35;0.85;1" dur="3s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <text x="998" y="215" class="h">VERIFY</text>
+    <text x="998" y="240" class="d">Power-on and full</text>
+    <text x="998" y="257" class="d">functional test.</text>
+  </g>
+
+  <!-- hand-off links: fill at the end of a step, then the next step lights up -->
+  <g stroke-width="3" stroke-linecap="round">
+    <!-- 01 -> 02 -->
+    <line x1="220" y1="205" x2="220" y2="205" stroke="#4da3ff">
+      <animate attributeName="x2" values="220;220;260;260;220" keyTimes="0;0.16;0.2;0.99;1" dur="15s" repeatCount="indefinite"/>
+    </line>
+    <circle cy="205" r="5" fill="#4da3ff" filter="url(#glow)" opacity="0">
+      <animate attributeName="cx" values="220;220;260;260" keyTimes="0;0.16;0.2;1" dur="15s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.16;0.2;0.21;1" dur="15s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 02 -> 03 -->
+    <line x1="460" y1="205" x2="460" y2="205" stroke="#f5c04a">
+      <animate attributeName="x2" values="460;460;500;500;460" keyTimes="0;0.36;0.4;0.99;1" dur="15s" repeatCount="indefinite"/>
+    </line>
+    <circle cy="205" r="5" fill="#f5c04a" filter="url(#glow)" opacity="0">
+      <animate attributeName="cx" values="460;460;500;500" keyTimes="0;0.36;0.4;1" dur="15s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.36;0.4;0.41;1" dur="15s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 03 -> 04 -->
+    <line x1="700" y1="205" x2="700" y2="205" stroke="#ff7a3d">
+      <animate attributeName="x2" values="700;700;740;740;700" keyTimes="0;0.56;0.6;0.99;1" dur="15s" repeatCount="indefinite"/>
+    </line>
+    <circle cy="205" r="5" fill="#ff7a3d" filter="url(#glow)" opacity="0">
+      <animate attributeName="cx" values="700;700;740;740" keyTimes="0;0.56;0.6;1" dur="15s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.56;0.6;0.61;1" dur="15s" repeatCount="indefinite"/>
+    </circle>
+    <!-- 04 -> 05 -->
+    <line x1="940" y1="205" x2="940" y2="205" stroke="#3ddc97">
+      <animate attributeName="x2" values="940;940;980;980;940" keyTimes="0;0.76;0.8;0.99;1" dur="15s" repeatCount="indefinite"/>
+    </line>
+    <circle cy="205" r="5" fill="#3ddc97" filter="url(#glow)" opacity="0">
+      <animate attributeName="cx" values="940;940;980;980" keyTimes="0;0.76;0.8;1" dur="15s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.76;0.8;0.81;1" dur="15s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- status pill -->
+  <g transform="translate(340 320)">
+    <rect width="520" height="42" rx="21" fill="#0e1722" stroke="#223247"/>
+    <circle cx="26" cy="21" r="5" fill="#4da3ff">
+      <animate attributeName="fill" values="#4da3ff;#4da3ff;#f5c04a;#ff7a3d;#3ddc97" keyTimes="0;0.2;0.4;0.6;0.8" dur="15s" repeatCount="indefinite" calcMode="discrete"/>
+    </circle>
+    <text x="46" y="26" class="st" fill="#e8eef7">
+      <animate attributeName="display" values="inline;none;none;none;none" keyTimes="0;0.2;0.4;0.6;0.8" dur="15s" repeatCount="indefinite" calcMode="discrete"/>
+      INSPECTING BOARD UNDER MICROSCOPE
+    </text>
+    <text x="46" y="26" class="st" fill="#e8eef7" display="none">
+      <animate attributeName="display" values="none;inline;none;none;none" keyTimes="0;0.2;0.4;0.6;0.8" dur="15s" repeatCount="indefinite" calcMode="discrete"/>
+      DIAGNOSING: RAILS AND CURRENT DRAW
+    </text>
+    <text x="46" y="26" class="st" fill="#f5c04a" display="none">
+      <animate attributeName="display" values="none;none;inline;none;none" keyTimes="0;0.2;0.4;0.6;0.8" dur="15s" repeatCount="indefinite" calcMode="discrete"/>
+      FAULT: PP_CPU_CORE 0.00 V
+    </text>
+    <text x="46" y="26" class="st" fill="#ff7a3d" display="none">
+      <animate attributeName="display" values="none;none;none;inline;none" keyTimes="0;0.2;0.4;0.6;0.8" dur="15s" repeatCount="indefinite" calcMode="discrete"/>
+      REWORK: HOT AIR + REBALL
+    </text>
+    <text x="46" y="26" class="st" fill="#3ddc97" display="none">
+      <animate attributeName="display" values="none;none;none;none;inline" keyTimes="0;0.2;0.4;0.6;0.8" dur="15s" repeatCount="indefinite" calcMode="discrete"/>
+      FINAL TEST: PASS
+    </text>
+  </g>
+</svg>

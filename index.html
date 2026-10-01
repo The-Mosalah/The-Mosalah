@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en" data-theme="blue">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mahmoud Salah, electronics failure analysis</title>
+<meta name="description" content="Smartphone PCB diagnostics, microsoldering and BGA rework. Explore an interactive fault-finding board.">
+<style>
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+:root,[data-theme=blue]{--deep:#040b1a;--mask:#0b2043;--edge:#1f4f9a;--sel:#143468;--line:#10264d;--chip:#0a101d;--chipsel:#16223a;--cu:#c9803f;--gold:#f0bf5f;--silk:#f4f1e8;--cool:#8fd8ff;--warn:#ff9a6b;--ink:#e9eef9;--mut:#9fb2d3;--pulse:#ffdca8;color-scheme:dark}
+[data-theme=black]{--deep:#070707;--mask:#141414;--edge:#454545;--sel:#262626;--line:#202020;--chip:#050505;--chipsel:#1a1a1a;--ink:#ededed;--mut:#a3a3a3}
+[data-theme=red]{--deep:#140505;--mask:#331010;--edge:#a03236;--sel:#4a1517;--line:#3a1416;--chip:#120808;--chipsel:#241214;--gold:#f4c870;--ink:#f6eded;--mut:#c8a6a6}
+[data-theme=purple]{--deep:#0b0516;--mask:#241046;--edge:#7042c4;--sel:#33186a;--line:#24123f;--chip:#0f0a1a;--chipsel:#1c1430;--ink:#eeeaf8;--mut:#b6a8d6}
+[data-theme=green]{--deep:#051810;--mask:#0a2c21;--edge:#1f7a57;--sel:#14402f;--line:#12382b;--chip:#0f1613;--chipsel:#1b2529;--cool:#a8f0ff;--ink:#e9efe9;--mut:#9db5aa}
+*{box-sizing:border-box}svg{shape-rendering:geometricPrecision;text-rendering:geometricPrecision}body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.btn{border-radius:12px;box-shadow:0 6px 22px -8px var(--gold)}.btn.alt{box-shadow:none;backdrop-filter:blur(6px)}
+nav.top{box-shadow:0 1px 0 color-mix(in srgb,var(--edge) 40%,transparent)}
+.hv{will-change:transform}html{scroll-behavior:smooth}
+body{margin:0;background:var(--deep);color:var(--ink);font:16px/1.6 "Segoe UI","Helvetica Neue",Arial,sans-serif;overflow-x:hidden}
+a{color:var(--gold)}:focus-visible{outline:2px solid var(--cool);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
+.blob{position:fixed;z-index:-3;width:60vmax;height:60vmax;border-radius:50%;background:radial-gradient(circle,var(--edge),transparent 65%);opacity:.35;filter:blur(40px);pointer-events:none;animation:drift 22s ease-in-out infinite alternate}
+.blob.b2{right:-20vmax;bottom:-25vmax;background:radial-gradient(circle,var(--cu),transparent 65%);opacity:.16;animation-duration:29s}
+.blob.b1{left:-20vmax;top:-25vmax}
+@keyframes drift{to{transform:translate(12vmax,8vmax) scale(1.2)}}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(420px circle at var(--mx,50%) var(--my,30%),color-mix(in srgb,var(--cool) 13%,transparent),transparent 70%)}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:30;background:linear-gradient(90deg,var(--cu),var(--gold),var(--cool));box-shadow:0 0 14px var(--gold)}
+nav.top{position:fixed;top:0;left:0;right:0;z-index:20;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--deep) 65%,transparent);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+nav.top b{letter-spacing:-.3px}nav.top .links{display:flex;gap:22px;align-items:center}
+nav.top a{color:var(--mut);text-decoration:none;font-size:15px}nav.top a:hover{color:var(--silk)}
+.masks{display:flex;gap:7px;align-items:center}
+.masks button{width:20px;height:20px;border-radius:50%;border:2px solid transparent;padding:0;cursor:pointer;box-shadow:inset 0 0 0 2px rgba(0,0,0,.35);transition:transform .2s}
+.masks button:hover{transform:scale(1.2)}.masks button[aria-pressed=true]{border-color:var(--silk)}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding-top:110px;padding-bottom:50px}
+h1{font-weight:800;font-size:clamp(46px,8.4vw,108px);line-height:.98;letter-spacing:-.045em;margin:0 0 14px;background:linear-gradient(100deg,var(--silk) 38%,var(--gold) 50%,var(--silk) 62%) 100% 0/260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s ease-in-out infinite}
+@keyframes shine{0%{background-position:100% 0}60%,100%{background-position:-60% 0}}
+.role{font-size:clamp(18px,2.6vw,26px);color:var(--gold);margin:0 0 18px;font-weight:600}
+.type{font:clamp(14px,1.9vw,17px) "JetBrains Mono","SF Mono",Consolas,"Courier New",monospace;color:var(--cool);min-height:3.4em;margin:0 0 24px;max-width:46ch}
+.cur{display:inline-block;width:.6ch;height:1.1em;vertical-align:-.15em;background:var(--cool);margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.btn{display:inline-block;background:var(--gold);color:#1a1204;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px;margin:0 10px 10px 0;position:relative;overflow:hidden;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);transform:translateX(-120%);animation:glint 3.6s ease-in-out infinite}
+@keyframes glint{45%,100%{transform:translateX(120%)}}
+.btn.alt{background:transparent;color:var(--gold);border:1.5px solid var(--gold)}.btn.alt::after{display:none}
+.hv{position:relative;aspect-ratio:1;width:100%;max-width:520px;justify-self:center;transform:translate(calc(var(--px,0)*14px),calc(var(--py,0)*14px));transition:transform .3s}
+.xh{stroke:var(--edge);stroke-width:1;stroke-opacity:.6;fill:none}
+.png{fill:none;stroke:var(--cool);stroke-width:1.5;transform-origin:200px 200px;animation:pg 6s ease-out infinite}
+@keyframes pg{0%{transform:scale(.3);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+.bp{fill:var(--cool);filter:drop-shadow(0 0 5px var(--cool));opacity:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hv svg{position:absolute;inset:0;width:100%;height:100%}
+.ring{fill:none;transform-origin:200px 200px}
+.r1{stroke:var(--edge);stroke-width:2;stroke-dasharray:2 9;animation:spin 46s linear infinite}
+.r2{stroke:var(--cu);stroke-width:2;stroke-dasharray:46 20;stroke-opacity:.7;animation:spin 30s linear infinite reverse}
+.r3{stroke:var(--gold);stroke-width:2;stroke-dasharray:80 30 20 40;stroke-opacity:.55;animation:spin 20s linear infinite}
+.orb{transform-origin:200px 200px;animation:spin 9s linear infinite}.orb.o2{animation-duration:14s;animation-direction:reverse}.orb.o3{animation-duration:23s}
+.die{fill:var(--chip);stroke:var(--gold);stroke-width:2.5;animation:breathe 3.2s ease-in-out infinite}
+@keyframes breathe{50%{stroke-opacity:.35}}
+.core{fill:var(--warn);opacity:.1;animation:heat 6s ease-in-out infinite;transform-origin:200px 200px}
+@keyframes heat{50%{opacity:.3;transform:scale(1.12)}}
+.ball{fill:#2b3439;animation:ballf 12s linear infinite}
+@keyframes ballf{0%{fill:var(--pulse)}9%,100%{fill:#2b3439}}
+.beam{animation:sweep 12s linear infinite;opacity:0}
+@keyframes sweep{0%,8%{transform:translateY(0);opacity:0}10%{opacity:1}58%{opacity:1}60%,100%{transform:translateY(166px);opacity:0}}
+.lk{fill:none;stroke:var(--cool);stroke-width:3;stroke-linecap:round;transform-origin:200px 200px;opacity:0;animation:lock 12s ease-out infinite}
+@keyframes lock{0%{transform:scale(1.35);opacity:0}8%{transform:scale(1);opacity:1}72%{opacity:1}80%,100%{opacity:0;transform:scale(1)}}
+.hd{fill:var(--pulse);filter:drop-shadow(0 0 4px var(--pulse)) drop-shadow(0 0 8px var(--gold))}
+#scanPill{position:absolute;left:50%;bottom:-2%;transform:translateX(-50%);font:600 12px "JetBrains Mono",Consolas,monospace;color:var(--cool);background:color-mix(in srgb,var(--deep) 80%,transparent);border:1px solid var(--edge);border-radius:999px;padding:5px 14px;white-space:nowrap;backdrop-filter:blur(6px)}
+#scanPill.bad{color:var(--warn);border-color:var(--warn)}
+#scanPill i{display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:8px;animation:blink 1s steps(1) infinite}
+.tr{fill:none;stroke:var(--cu);stroke-opacity:.6;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.pl{fill:none;stroke:var(--pulse);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.lbl{font:600 11px "JetBrains Mono",Consolas,monospace;fill:var(--silk);animation:fade 4s ease-in-out infinite}
+@keyframes fade{50%{opacity:.25}}
+.tick{border-block:1px solid var(--line);background:color-mix(in srgb,var(--mask) 55%,transparent);overflow:hidden;padding:11px 0;font:14px "JetBrains Mono",Consolas,monospace;color:var(--mut)}
+.mq{display:flex;width:max-content;gap:44px;animation:mq 38s linear infinite}
+.mq.rev{animation-direction:reverse;animation-duration:46s}
+@keyframes mq{to{transform:translateX(-50%)}}
+.tick:hover .mq,.tags:hover .mq{animation-play-state:paused}
+.ok{color:var(--cool)}.bad{color:var(--warn)}
+section{padding:96px 0}
+h2.big{font-size:clamp(28px,4vw,44px);letter-spacing:-.03em;margin:0 0 14px;line-height:1.1}
+h2.big::after{content:"";display:block;height:3px;width:0;margin-top:12px;background:linear-gradient(90deg,var(--gold),transparent);transition:width 1s .3s}
+h2.big.in::after{width:150px}
+.sub{color:var(--mut);max-width:60ch;margin:0 0 34px}
+.lab{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:34px;align-items:start}
+.sym{display:flex;flex-wrap:wrap;gap:8px}
+.sym button{font:inherit;font-size:14px;color:var(--ink);background:var(--mask);border:1px solid var(--edge);border-radius:9px;padding:9px 15px;cursor:pointer;transition:.2s}
+.sym button:hover{border-color:var(--gold);transform:translateY(-2px)}
+.sym button[aria-pressed=true]{background:var(--sel);border-color:var(--warn);color:var(--silk);box-shadow:0 0 18px color-mix(in srgb,var(--warn) 35%,transparent)}
+.card{margin-top:16px;background:color-mix(in srgb,var(--mask) 85%,transparent);border:1px solid var(--edge);border-radius:14px;padding:20px 22px;min-height:270px}
+.card h3{margin:0 0 6px;font-size:20px}.card p{margin:6px 0;color:var(--mut);font-size:15px}.card p b{color:var(--silk)}
+.card ol{margin:8px 0 0;padding-left:20px;font-size:15px}.card li{margin:5px 0;animation:in .5s both}.card li:nth-child(2){animation-delay:.12s}.card li:nth-child(3){animation-delay:.24s}.card li:nth-child(4){animation-delay:.36s}
+@keyframes in{from{opacity:0;transform:translateX(-8px)}}
+.tag{display:inline-block;font-size:13px;border:1px solid var(--warn);color:var(--warn);border-radius:6px;padding:1px 8px;margin:2px 4px 2px 0}
+.card p.note{font-size:13px}
+.boardwrap{background:linear-gradient(135deg,color-mix(in srgb,var(--edge) 55%,var(--deep)),var(--deep));border:1px solid var(--edge);border-radius:18px;padding:14px;position:sticky;top:84px}
+#board{display:block;width:100%;height:auto}
+.dots{fill:var(--edge);opacity:.5}
+.net.hot .tr{stroke:var(--warn);stroke-opacity:1}.net.hot .pl{stroke:#fff;animation-duration:1.3s}
+.chip{cursor:pointer}
+.chip rect{fill:var(--chip);stroke:var(--gold);stroke-opacity:.55;stroke-width:2;transition:.2s;animation:breathe 4s ease-in-out infinite}
+.chip:nth-child(2n) rect{animation-delay:-1.5s}.chip:nth-child(3n) rect{animation-delay:-2.7s}
+.chip text{fill:var(--silk);font:600 15px "Segoe UI",Arial,sans-serif;text-anchor:middle;pointer-events:none}
+.chip .sm{font:11px "JetBrains Mono",Consolas,monospace;fill-opacity:.7}
+.chip:hover rect,.chip:focus rect{stroke-opacity:1;fill:var(--chipsel);animation:none}
+.chip.sus rect{stroke:var(--warn);stroke-opacity:1;animation:sus 1.2s ease-in-out infinite}
+@keyframes sus{50%{stroke-opacity:.3;stroke-width:4}}
+.pin{fill:var(--silk);opacity:.8}
+.scopebox{margin-top:10px;background:rgba(0,0,0,.3);border:1px solid var(--edge);border-radius:10px;padding:8px 10px}
+#scopeLabel{display:block;font:12px "JetBrains Mono",Consolas,monospace;color:var(--mut);margin-bottom:4px;min-height:2.6em}
+#scope{display:block;width:100%;height:90px}
+.cap{font-size:13px;color:var(--mut);text-align:center;margin:8px 0 0}
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative}
+.pipe::before{content:"";position:absolute;left:4%;right:4%;top:50%;height:3px;background:linear-gradient(90deg,transparent,var(--pulse),transparent) 0 0/30% 100% no-repeat,var(--cu);opacity:.7;animation:sweep 4s linear infinite;z-index:0}
+@keyframes sweep{from{background-position:-40% 0}to{background-position:140% 0}}
+.step{position:relative;z-index:1;background:var(--mask);border:1.5px solid var(--edge);border-radius:14px;padding:20px;animation:lit 8s ease-in-out infinite}
+.step:nth-child(2){animation-delay:2s}.step:nth-child(3){animation-delay:4s}.step:nth-child(4){animation-delay:6s}
+@keyframes lit{0%,28%,100%{border-color:var(--edge);transform:none}6%,20%{border-color:var(--gold);transform:translateY(-6px);box-shadow:0 12px 30px color-mix(in srgb,var(--gold) 22%,transparent)}}
+.step h3{margin:0 0 4px;font-size:19px}.step p{margin:0;color:var(--mut);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.spin{border:2px solid transparent;border-radius:16px;padding:22px;background:linear-gradient(var(--mask),var(--mask)) padding-box,conic-gradient(from var(--a),transparent 62%,var(--gold),transparent 92%) border-box;animation:rot 6s linear infinite;transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s}
+.grid .spin:nth-child(2n){animation-delay:-2s}.grid .spin:nth-child(3n){animation-delay:-4s}
+@keyframes rot{to{--a:360deg}}
+.spin h3{margin:0 0 6px;font-size:18px}.spin p{margin:0;color:var(--mut);font-size:15px}
+.tags{display:grid;gap:12px;overflow:hidden;margin-top:34px;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.tags .mq{gap:14px;animation-duration:32s}.tags .mq.rev{animation-duration:40s}
+.tags span{white-space:nowrap;border:1px solid var(--edge);border-radius:999px;padding:8px 18px;background:var(--mask);font-size:15px}
+.work{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+.work h3{margin:0 0 6px;font-size:24px}.work p{margin:0;color:var(--mut);max-width:56ch}
+footer{padding:30px 24px;text-align:center;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
+.rv{opacity:0;translate:0 26px;transition:opacity .8s,translate .8s}.rv.in{opacity:1;translate:none}
+@media(max-width:900px){.hero,.lab{grid-template-columns:1fr}.hv{max-width:360px;order:-1}.boardwrap{position:static}.pipe{grid-template-columns:1fr}.pipe::before{display:none}nav.top .links a{display:none}.hero{padding-top:130px}}
+html[data-motion=off] *,html[data-motion=off] *::before,html[data-motion=off] *::after{animation:none!important;transition:none!important}html[data-motion=off] .rv{opacity:1;translate:none}html[data-motion=off] h1{color:var(--silk);background:none}html[data-motion=off]{scroll-behavior:auto}
+#mo{background:none;border:1px solid var(--edge);color:var(--mut);border-radius:999px;font:12px inherit;padding:3px 10px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="prog"></div>
+
+<nav class="top"><div class="wrap">
+  <b>Mahmoud Salah</b>
+  <div class="links"><a href="#lab">Diagnostic board</a><a href="#method">Method</a><a href="#focus">Focus</a><a href="#contact">Contact</a>
+  <button id="mo" type="button"></button><div class="masks" id="masks" role="group" aria-label="Solder mask color"></div></div>
+</div></nav>
+
+<main>
+<div class="wrap hero">
+  <div>
+    <h1>Mahmoud<br>Salah</h1>
+    <p class="role">Electronics failure analysis engineer</p>
+    <p class="type"><span id="tw"></span><i class="cur"></i></p>
+    <a class="btn" href="#lab">Try the diagnostic board</a><a class="btn alt" href="assets/Mahmoud_Salah_Resume.pdf">Download CV</a><a class="btn alt" href="https://linkedin.com/in/mosala7">LinkedIn</a>
+  </div>
+  <div class="hv" id="hv">
+        <svg viewBox="0 0 400 400" role="img" aria-label="Animated microchip with signals, scanning rings and orbiting probes">
+      <circle class="ring r1" cx="200" cy="200" r="188"/><circle class="ring r2" cx="200" cy="200" r="166"/><circle class="ring r3" cx="200" cy="200" r="146"/>
+      <g id="sweep"></g>
+      <path class="xh" d="M12 200H388M200 12V388"/><circle class="png" cx="200" cy="200" r="100"/><circle class="png" cx="200" cy="200" r="100" style="animation-delay:-3s"/>
+      <g id="hnets"></g>
+      <circle class="core" cx="200" cy="200" r="90"/>
+      <defs><clipPath id="dieclip"><rect x="130" y="130" width="140" height="140" rx="12"/></clipPath>
+      <linearGradient id="bm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--cool)" stop-opacity="0"/><stop offset="1" stop-color="var(--cool)" stop-opacity=".75"/></linearGradient></defs>
+      <rect class="die" x="130" y="130" width="140" height="140" rx="12"/>
+      <g id="balls"></g>
+      <g clip-path="url(#dieclip)"><rect class="beam" x="130" y="104" width="140" height="26" fill="url(#bm)"/></g>
+      <g id="lock"><path class="lk" d="M118 146V118H146"/><path class="lk" d="M254 118H282V146"/><path class="lk" d="M282 254V282H254"/><path class="lk" d="M146 282H118V254"/></g>
+      <circle cx="145" cy="145" r="3.5" fill="#f4f1e8"/>
+      <g class="orb"><circle cx="200" cy="12" r="5" fill="var(--cool)"/></g>
+      <g class="orb o2"><circle cx="200" cy="34" r="4" fill="var(--gold)"/></g>
+      <g class="orb o3"><circle cx="200" cy="54" r="3.5" fill="var(--warn)"/></g>
+      <g id="blips"></g><text class="lbl" x="34" y="66">PMIC</text><text class="lbl" x="330" y="66" style="animation-delay:-1s">DDR</text>
+      <text class="lbl" x="34" y="346" style="animation-delay:-2s">UFS</text><text class="lbl" x="336" y="346" style="animation-delay:-3s">RF</text>
+    </svg>
+    <div id="scanPill" aria-live="off"><i></i><span id="scanTxt">LOCKING TARGET</span></div>
+  </div>
+</div>
+
+<div class="tick" aria-hidden="true"><div class="mq" id="tk"></div></div>
+
+<section id="lab"><div class="wrap">
+  <h2 class="big rv">Diagnostic board</h2>
+  <p class="sub rv">Pick a symptom, or hover any part. It plays through the symptoms by itself until you take over.</p>
+  <div class="lab">
+    <div>
+      <div class="sym" id="sym" role="group" aria-label="Symptoms"></div>
+      <div class="card" id="info" aria-live="polite"></div>
+    </div>
+    <div class="boardwrap">
+      <svg id="board" viewBox="0 0 640 400" role="group" aria-label="Interactive diagram of a smartphone motherboard">
+        <defs><pattern id="d" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.2" class="dots"/></pattern>
+        <radialGradient id="gl"><stop offset="0" style="stop-color:var(--cool)" stop-opacity=".55"/><stop offset="1" style="stop-color:var(--cool)" stop-opacity="0"/></radialGradient></defs>
+        <rect width="640" height="400" rx="10" fill="url(#d)"/>
+        <g id="nets"></g><g id="chips"></g>
+        <circle id="glow" r="28" fill="url(#gl)" opacity="0" pointer-events="none"/>
+      </svg>
+      <div class="scopebox"><span id="scopeLabel"></span><canvas id="scope" role="img" aria-label="Animated bench-supply current trace for the selected symptom"></canvas></div>
+      <p class="cap">Illustrative layout, not a specific device.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="method"><div class="wrap">
+  <h2 class="big rv">How I diagnose</h2>
+  <p class="sub rv">Every repair follows the same path, and every step leaves evidence behind.</p>
+  <div class="pipe">
+    <div class="step rv"><h3>Symptom</h3><p>What the board does, and what it draws from the bench supply.</p></div>
+    <div class="step rv"><h3>Measure</h3><p>Rails, current and signals, from the input to the affected block.</p></div>
+    <div class="step rv"><h3>Root cause</h3><p>The failed part or short, confirmed before anything is replaced.</p></div>
+    <div class="step rv"><h3>Fix</h3><p>Component-level rework, then verification and documentation.</p></div>
+  </div>
+</div></section>
+
+<section id="focus"><div class="wrap">
+  <h2 class="big rv">Focus</h2>
+  <p class="sub rv">6+ years of smartphone PCB diagnostics, microsoldering, BGA rework and repair-process improvement.</p>
+  <div class="grid">
+    <div class="spin tilt rv"><h3>Failure analysis</h3><p>Tracing power and signal faults on smartphone boards and recording the evidence for each repair.</p></div>
+    <div class="spin tilt rv"><h3>Component-level rework</h3><p>Microsoldering and BGA rework, backed by hands-on repair work.</p></div>
+    <div class="spin tilt rv"><h3>Subsystems</h3><p>PMIC and power domains, UFS/eMMC, DDR/RAM and RF troubleshooting.</p></div>
+    <div class="spin tilt rv"><h3>Schematics and tools</h3><p>Schematic analysis with Cadence PCB tools and OrCAD.</p></div>
+    <div class="spin tilt rv"><h3>Process and quality</h3><p>Repair-process improvement, quality and hardware reliability.</p></div>
+  </div>
+  <div class="tags" aria-hidden="true"><div class="mq" id="t1"></div><div class="mq rev" id="t2"></div></div>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <h2 class="big rv">Contact</h2>
+  <p class="sub rv">Based in Gebze, Kocaeli, Türkiye. The fastest way to reach me is LinkedIn.</p>
+  <a class="btn rv" href="https://linkedin.com/in/mosala7">LinkedIn</a><a class="btn alt rv" href="https://github.com/The-Mosalah">GitHub</a>
+</div></section>
+</main>
+<footer>© 2026 Mahmoud Salah</footer>
+
+<script>
+const $=s=>document.querySelector(s),NS="http://www.w3.org/2000/svg",root=document.documentElement,RM=(()=>{try{return localStorage.getItem("motion")=="off"}catch(e){return false}})();
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
+let col={};
+function colors(){col={c:css("--cool"),e:css("--edge"),p:css("--pulse"),u:css("--cu")}}
+
+const CH={
+ pmic:{n:"Power management IC",x:60,y:120,w:90,h:70,l:"PMIC",d:"Generates and sequences the supply rails the rest of the board depends on.",f:"Dead phone, no boot, abnormal current draw, parts of the board heating.",k:"The input rail from the battery, the output rails, enable signals, and whether rails collapse under load."},
+ chg:{n:"Charging IC",x:60,y:270,w:90,h:60,l:"Charger",d:"Manages USB power in and battery charging.",f:"Not charging, slow or wrong charging, heat near the charging port.",k:"Voltage at the connector and after the IC, battery voltage, and the current drawn while charging."},
+ soc:{n:"Processor (SoC)",x:250,y:165,w:130,h:110,l:"SoC",d:"The main processor that runs everything else.",f:"Boot loops, freezes, heat while idle.",k:"Core and I/O rails, clocks and reset, and the current pattern during boot."},
+ ddr:{n:"Memory (DDR)",x:450,y:100,w:110,h:60,l:"DDR",d:"Working memory for the processor.",f:"Restarts and failed boots that repeat at the same stage.",k:"Memory supply rails and any sign of impact or liquid damage near the chip."},
+ ufs:{n:"Storage (UFS or eMMC)",x:450,y:280,w:110,h:60,l:"Storage",s:"UFS / eMMC",d:"Holds the operating system and user data.",f:"Stuck at the logo, restore errors, no data access.",k:"Storage supply rails, data-line continuity and the restore log."},
+ rf:{n:"RF section",x:250,y:40,w:130,h:56,l:"RF",d:"Handles cellular signal, from the antennas to the modem.",f:"No service, weak signal, lost network.",k:"RF supply rails, antenna connectors and damage around the RF front end."}
+};
+const NETS={pmic_soc:["M150 155 H200 V205 H250",["pmic","soc"]],chg_pmic:["M105 270 V190",["chg","pmic"]],pmic_rf:["M105 120 V68 H250",["pmic","rf"]],soc_ddr:["M380 195 H415 V130 H450",["soc","ddr"]],soc_ufs:["M380 245 H415 V310 H450",["soc","ufs"]],rf_soc:["M315 96 V165",["rf","soc"]]};
+const SY={
+ off:{t:"Dead, no power",s:["pmic","chg","soc"],st:["Check the battery voltage and the battery connector.","Power the board from a bench supply and note the current draw at power-on.","Measure the main rail going into the PMIC.","If the rail is pulled down, look for a short and locate it by heat or voltage drop."]},
+ chg:{t:"Not charging",s:["chg","pmic"],st:["Confirm voltage at the charging connector.","Follow it to the charging IC and check what comes out.","Check battery voltage and the current drawn when connected.","Inspect the connector for corrosion or bent pins."]},
+ loop:{t:"Boot loop",s:["soc","ddr","pmic"],st:["Watch the bench-supply current for a repeating pattern.","Check core and memory rails during the loop.","Inspect for liquid or impact damage around the processor and memory.","Test the storage chip if the loop stops at the same stage."]},
+ logo:{t:"Stuck at the logo",s:["ufs","ddr","soc"],st:["Attempt a restore and note the exact error.","Check the storage supply rails.","Check data lines to the storage chip.","Rule out memory faults if the error is inconsistent."]},
+ svc:{t:"No service",s:["rf","pmic"],st:["Check antenna connectors and SIM tray contacts.","Measure the RF supply rails.","Inspect the RF front end for damage.","Confirm the modem is detected before reworking anything."]}
+};
+const LB={ok:"Healthy board: current rises, settles and holds steady.",off:"Dead board: almost no current drawn.",chg:"Not charging: only a trickle of current.",loop:"Boot loop: current ramps, spikes, drops and repeats.",logo:"Stuck at the logo: current stalls at a mid level.",svc:"No service: normal boot with the modem retrying in bursts."};
+const F={
+ ok:t=>{const p=t%5;return p<.6?.8*p/.6:p<1.2?.8-.25*(p-.6)/.6:.55+.03*Math.sin(t*7)},
+ off:t=>.03+.01*Math.sin(t*3),chg:t=>.13+.02*Math.sin(t*4),
+ loop:t=>{const p=t%2.4;return p<.5?.7*p/.5:p<.7?.7+.25*(p-.5)/.2:p<.85?.95-.9*(p-.7)/.15:.05},
+ logo:t=>{const p=t%6;return p<.8?.5*p/.8:.5+.05*Math.sin(t*3)},
+ svc:t=>{const p=t%1.6;return .45+(p<.15?.35*Math.sin(p/.15*Math.PI):0)}
+};
+
+/* theme */
+const TH=[["blue","Blue","#1f4f9a"],["black","Black","#454545"],["red","Red","#a03236"],["purple","Purple","#7042c4"],["green","Green","#1f7a57"]],mk=$("#masks");
+function setTheme(n,save){root.dataset.theme=n;for(const b of mk.children)b.setAttribute("aria-pressed",String(b.dataset.t===n));if(save){try{localStorage.setItem("mask",n)}catch(e){}}colors();if(RM){drawBg(0);drawScope(0)}}
+for(const [n,l,c] of TH){const b=document.createElement("button");b.dataset.t=n;b.title=l;b.setAttribute("aria-label",l+" solder mask");b.style.background=c;b.onclick=()=>setTheme(n,1);mk.appendChild(b)}
+
+const mo=$("#mo");if(RM)root.dataset.motion="off";mo.textContent=RM?"Motion: off":"Motion: on";mo.setAttribute("aria-pressed",String(!RM));mo.onclick=()=>{try{localStorage.setItem("motion",RM?"on":"off")}catch(e){}location.reload()};
+/* hero chip */
+const bl=$("#balls"),hn=$("#hnets");
+const SCAN=12;
+for(let gx=0;gx<5;gx++)for(let gy=0;gy<5;gy++){const cy=155+gy*25,ball=el("circle",{class:"ball",cx:155+gx*25,cy,r:5},bl);ball.style.animationDelay=(SCAN*(.08+(cy-117)/166*.52)).toFixed(2)+"s"}
+const HNETS=["M130 160 H70 L50 140 H10","M130 200 H10","M130 240 H70 L50 260 H10","M270 160 H330 L350 140 H390","M270 200 H390","M270 240 H330 L350 260 H390","M160 130 V70 L140 50 V10","M200 130 V10","M240 130 V70 L260 50 V10","M160 270 V330 L140 350 V390","M200 270 V390","M240 270 V330 L260 350 V390"];
+const trails=HNETS.map((dd,k)=>{el("path",{class:"tr",d:dd},hn);const seg=el("path",{class:"pl",d:dd},hn),dot=el("circle",{class:"hd",r:3.6},hn);return{seg,dot,len:seg.getTotalLength(),ph:k*.37,sp:.1+(k%4)*.025,rev:k%2==1}});
+const pill=$("#scanPill"),ptx=$("#scanTxt");
+function scanLabel(f){if(f<.08)return["LOCKING TARGET",0];if(f<.6)return["SCANNING DIE "+String(Math.round((f-.08)/.52*100)).padStart(3,"0")+"%",0];if(f<.72)return["ANALYZING RAILS",0];if(f<.9)return["FAULT: PP_CPU_CORE 0.00 V",1];return["STANDBY",0]}
+let lastTxt="";
+const sw=$("#sweep"),SR=176,pt=a=>{const q=(a-90)*Math.PI/180;return(200+SR*Math.cos(q)).toFixed(2)+" "+(200+SR*Math.sin(q)).toFixed(2)},SL=64;
+for(let k=0;k<SL;k++){const a0=-70+k*70/SL,a1=a0+70/SL+.6,w=el("path",{d:`M200 200L${pt(a0)}A${SR} ${SR} 0 0 1 ${pt(a1)}Z`,fill:"var(--cool)","fill-opacity":(Math.pow((k+1)/SL,2)*.27).toFixed(3)},sw)}
+el("path",{d:`M200 200L${pt(0)}`,stroke:"var(--cool)","stroke-width":2,"stroke-linecap":"round"},sw);
+BL=[[60,60],[352,60],[56,340],[356,340],[200,200]].map(([x,y])=>({a:(Math.atan2(x-200,200-y)*180/Math.PI+360)%360,c:el("circle",{class:"bp",cx:x,cy:y,r:5},$("#blips"))}));
+function hero(now){const t=now/1000,ang=(t/6%1)*360;sw.setAttribute("transform","rotate("+ang.toFixed(2)+" 200 200)");
+  for(const b of BL){const age=((ang-b.a+360)%360)/360;b.c.style.opacity=Math.max(0,1-age*1.3);b.c.setAttribute("r",4+age*5)}
+  for(const q of trails){const u=(t*q.sp+q.ph)%2,g=u<1?u:2-u,grow=u<1,L=q.len*g;
+    /* grows from the chip out, then shrinks back toward the far end */
+    q.seg.style.strokeDasharray=L+" "+(q.len+1);q.seg.style.strokeDashoffset=grow?0:-(q.len-L);
+    const pt=q.seg.getPointAtLength(grow?L:q.len-L);
+    q.dot.setAttribute("cx",pt.x);q.dot.setAttribute("cy",pt.y);q.dot.style.opacity=g>.03?1:0}
+  const[tx,bad]=scanLabel((t%SCAN)/SCAN);if(tx!==lastTxt){ptx.textContent=tx;pill.classList.toggle("bad",!!bad);lastTxt=tx}
+  requestAnimationFrame(hero)}
+if(RM){for(const q of trails){q.seg.style.strokeDasharray=q.len;q.dot.style.opacity=0}ptx.textContent="SCAN COMPLETE";for(const b of BL)b.c.style.opacity=.8}else requestAnimationFrame(hero);
+
+/* ticker + tags */
+const RD=[["PP_VDD_MAIN","3.85 V","OK"],["PP1V8_S2","1.79 V","OK"],["PP_CPU_CORE","0.00 V","FAULT"],["PP3V0_NAND","3.01 V","OK"],["VBUS","4.98 V","OK"],["PP_RF_VDD","2.71 V","OK"],["PP0V9_DDR","0.90 V","OK"],["PP_CPU_CORE","0.00 V","FAULT"]];
+const rd=RD.map(r=>`<span class="${r[2]=="OK"?"ok":"bad"}">${r[0]}  ${r[1]}  ${r[2]}</span>`).join("");
+$("#tk").innerHTML=rd+rd;
+const TG=["Failure analysis","PCB troubleshooting","Schematic analysis","Power domains","PMIC","UFS/eMMC","DDR/RAM","RF troubleshooting","Microsoldering","BGA rework","Cadence PCB tools","OrCAD"];
+const tg=TG.map(t=>`<span>${t}</span>`).join(""),tg2=TG.slice().reverse().map(t=>`<span>${t}</span>`).join("");
+$("#t1").innerHTML=tg+tg;$("#t2").innerHTML=tg2+tg2;
+
+/* typewriter, loops forever */
+const PH=["Tracing power faults on smartphone boards.","Reworking BGA and microsoldering at component level.","Documenting the evidence behind every repair.","Reading schematics in Cadence and OrCAD."],tw=$("#tw");
+if(RM)tw.textContent=PH[0];else(function run(i=0,n=0,del=false){
+  const s=PH[i];tw.textContent=s.slice(0,n);
+  if(!del&&n<s.length)return setTimeout(()=>run(i,n+1,false),38);
+  if(!del)return setTimeout(()=>run(i,n,true),1700);
+  if(n>0)return setTimeout(()=>run(i,n-1,true),18);
+  setTimeout(()=>run((i+1)%PH.length,0,false),350);
+})();
+
+/* background circuit, continuous */
+const bg=$("#bg"),b2=bg.getContext("2d");let PW=[],PT=[],BW=0,BH=0,mx=-999,my=-999;
+function build(){
+  const r=Math.min(devicePixelRatio||1,3);BW=innerWidth;BH=innerHeight;bg.width=BW*r;bg.height=BH*r;b2.setTransform(r,0,0,r,0,0);
+  PW=[];PT=[];const G=44,n=Math.max(14,Math.round(BW*BH/48000));
+  for(let i=0;i<n;i++){
+    let x=Math.floor(Math.random()*BW/G)*G,y=Math.floor(Math.random()*BH/G)*G,hor=Math.random()<.5;const pts=[[x,y]];
+    for(let k=0,m=4+Math.random()*4;k<m;k++){
+      const L=G*(2+Math.floor(Math.random()*6)),d=Math.random()<.5?-1:1;
+      hor?x+=L*d:y+=L*d;pts.push([x,y]);
+      const s=(G/2)*(Math.random()<.5?-1:1);x+=s;y+=s;pts.push([x,y]);hor=!hor;
+      if(x<-40||y<-40||x>BW+40||y>BH+40)break;
+    }
+    const cum=[0];for(let k=1;k<pts.length;k++)cum.push(cum[k-1]+Math.hypot(pts[k][0]-pts[k-1][0],pts[k][1]-pts[k-1][1]));
+    PW.push({pts,cum,len:cum[cum.length-1]});
+    for(let q=0;q<1+(Math.random()<.6);q++)PT.push({w:i,d:Math.random()*cum[cum.length-1],v:36+Math.random()*62});
+  }
+}
+function at(P,d){let k=1;while(k<P.cum.length-1&&P.cum[k]<d)k++;const t=(d-P.cum[k-1])/(P.cum[k]-P.cum[k-1]||1),a=P.pts[k-1],b=P.pts[k];return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]}
+let last=0;
+function drawBg(now){
+  const dt=Math.min(.05,(now-last)/1000||0);last=now;
+  b2.clearRect(0,0,BW,BH);b2.lineWidth=1.6;b2.strokeStyle=col.u;b2.globalAlpha=.16;b2.beginPath();
+  for(const P of PW){b2.moveTo(P.pts[0][0],P.pts[0][1]);for(let k=1;k<P.pts.length;k++)b2.lineTo(P.pts[k][0],P.pts[k][1])}
+  b2.stroke();b2.globalAlpha=.3;b2.fillStyle=col.u;
+  for(const P of PW){for(const e of[P.pts[0],P.pts[P.pts.length-1]]){b2.beginPath();b2.arc(e[0],e[1],3,0,7);b2.fill()}}
+  b2.globalCompositeOperation="lighter";b2.fillStyle=col.p;
+  for(const p of PT){const P=PW[p.w];if(!RM){p.d+=p.v*dt;if(p.d>P.len)p.d-=P.len}
+    const [x,y]=at(P,p.d),near=Math.max(0,1-Math.hypot(x-mx,y-my)/190),sc=1+near*1.4;
+    for(let k=0;k<7;k++){const [tx,ty]=at(P,Math.max(0,p.d-k*7));b2.globalAlpha=(1-k/7)*(.55+near*.4);b2.beginPath();b2.arc(tx,ty,(2.6-k*.28)*sc,0,7);b2.fill()}}
+  b2.globalCompositeOperation="source-over";b2.globalAlpha=1;
+  if(!RM)requestAnimationFrame(drawBg);
+}
+
+/* interactive board */
+const info=$("#info"),symBox=$("#sym");let active=null,mode="ok",user=0;
+for(const id in NETS){const g=el("g",{class:"net",id:"n_"+id},$("#nets"));for(const c of["tr","pl"])el("path",{class:c,d:NETS[id][0],pathLength:100},g).style.animationDelay=(-Math.random()*3)+"s"}
+const chips={};
+for(const id in CH){const c=CH[id],g=el("g",{class:"chip",tabindex:0,role:"button","aria-label":c.n},$("#chips"));
+  el("rect",{x:c.x,y:c.y,width:c.w,height:c.h,rx:8},g);el("circle",{class:"pin",cx:c.x+10,cy:c.y+10,r:2.5},g);
+  el("text",{x:c.x+c.w/2,y:c.y+c.h/2+(c.s?0:5)},g).textContent=c.l;
+  if(c.s)el("text",{class:"sm",x:c.x+c.w/2,y:c.y+c.h/2+18},g).textContent=c.s;
+  const hov=()=>{user=Date.now();chip(id)};
+  g.addEventListener("mouseenter",hov);g.addEventListener("focus",hov);g.addEventListener("click",hov);
+  g.addEventListener("mouseleave",()=>active?sym(active):home());
+  g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();hov()}});
+  chips[id]=g}
+for(const k in SY){const b=document.createElement("button");b.textContent=SY[k].t;b.dataset.k=k;b.setAttribute("aria-pressed","false");
+  b.onclick=()=>{user=Date.now();active=active===k?null:k;active?sym(k):home()};symBox.appendChild(b)}
+function mark(l){for(const id in chips)chips[id].classList.toggle("sus",l.includes(id));
+  for(const n in NETS)$("#n_"+n).classList.toggle("hot",l.length>0&&NETS[n][1].every(x=>l.includes(x)))}
+function press(k){for(const b of symBox.children)b.setAttribute("aria-pressed",String(b.dataset.k===k))}
+function setLab(){$("#scopeLabel").textContent="Illustrative bench-supply current. "+LB[mode];if(RM)drawScope(0)}
+function home(){mode="ok";mark([]);press(null);setLab();
+  info.innerHTML="<h3>Where would you start?</h3><p>Select a symptom, or hover a component, to see what it does and what I check first.</p><p class='note'>Every diagnosis starts from measurement, so these are the usual suspects, not a verdict.</p>"}
+function sym(k){const s=SY[k];mode=k;mark(s.s);press(k);setLab();
+  info.innerHTML="<h3>"+s.t+"</h3><p><b>Usual suspects, in order:</b> "+s.s.map(i=>"<span class='tag'>"+CH[i].l+"</span>").join("")+"</p><p><b>What I check:</b></p><ol>"+s.st.map(x=>"<li>"+x+"</li>").join("")+"</ol><p class='note'>The measurements decide. This only shows where I look first.</p>"}
+function chip(id){const c=CH[id];if(!active)mark([id]);
+  info.innerHTML="<h3>"+c.n+"</h3><p><b>What it does:</b> "+c.d+"</p><p><b>When it fails:</b> "+c.f+"</p><p><b>What I check first:</b> "+c.k+"</p>"}
+const bd=$("#board"),gl=$("#glow");
+bd.addEventListener("pointermove",e=>{user=Date.now();const p=bd.createSVGPoint();p.x=e.clientX;p.y=e.clientY;const q=p.matrixTransform(bd.getScreenCTM().inverse());gl.setAttribute("cx",q.x);gl.setAttribute("cy",q.y);gl.setAttribute("opacity",1)});
+bd.addEventListener("pointerleave",()=>gl.setAttribute("opacity",0));
+/* auto-demo loop: plays every symptom forever until the visitor takes over */
+const KEYS=Object.keys(SY);let ai=-1;
+if(!RM)setInterval(()=>{if(Date.now()-user<14000)return;ai=(ai+1)%(KEYS.length+1);if(ai===KEYS.length){active=null;home()}else{active=KEYS[ai];sym(active)}},5200);
+
+/* current trace */
+const cv=$("#scope"),c2=cv.getContext("2d");
+function size(){const r=devicePixelRatio||1;cv.width=cv.clientWidth*r;cv.height=cv.clientHeight*r;c2.setTransform(r,0,0,r,0,0)}
+function drawScope(now){
+  const W=cv.clientWidth,H=cv.clientHeight,t=RM?0:now/1000,f=F[mode];
+  c2.clearRect(0,0,W,H);c2.strokeStyle=col.e;c2.globalAlpha=.35;c2.lineWidth=1;
+  for(let x=0;x<W;x+=30){c2.beginPath();c2.moveTo(x,0);c2.lineTo(x,H);c2.stroke()}
+  for(let y=0;y<H;y+=22.5){c2.beginPath();c2.moveTo(0,y);c2.lineTo(W,y);c2.stroke()}
+  c2.globalAlpha=1;c2.strokeStyle=col.c;c2.lineWidth=2;c2.lineJoin="round";c2.beginPath();
+  for(let x=0;x<=W;x+=2){const y=H-6-f(t*.8+x/W*6)*(H-16);x?c2.lineTo(x,y):c2.moveTo(x,y)}
+  c2.stroke();if(!RM)requestAnimationFrame(drawScope);
+}
+
+/* pointer, tilt, progress, replaying reveals */
+const hv=$("#hv");
+addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY;root.style.setProperty("--mx",mx+"px");root.style.setProperty("--my",my+"px");
+  const r=hv.getBoundingClientRect();root.style.setProperty("--px",((e.clientX-r.left)/r.width-.5).toFixed(2));root.style.setProperty("--py",((e.clientY-r.top)/r.height-.5).toFixed(2))});
+document.querySelectorAll(".tilt").forEach(n=>{
+  n.addEventListener("pointermove",e=>{const r=n.getBoundingClientRect();n.style.setProperty("--ry",(((e.clientX-r.left)/r.width-.5)*12)+"deg");n.style.setProperty("--rx",(-((e.clientY-r.top)/r.height-.5)*12)+"deg")});
+  n.addEventListener("pointerleave",()=>{n.style.setProperty("--rx","0deg");n.style.setProperty("--ry","0deg")})});
+const prog=$("#prog");
+addEventListener("scroll",()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+"%"},{passive:true});
+if(!RM&&"IntersectionObserver" in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("in",e.isIntersecting)),{threshold:.12});
+  document.querySelectorAll(".rv").forEach((n,i)=>{n.style.transitionDelay=(i%4)*90+"ms";io.observe(n)});
+}else document.querySelectorAll(".rv").forEach(n=>n.classList.add("in"));
+
+/* start */
+let saved=null;try{saved=localStorage.getItem("mask")}catch(e){}
+setTheme(TH.some(t=>t[0]===saved)?saved:"blue");
+build();size();home();
+let rz;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{build();size();if(RM){drawBg(0);drawScope(0)}},200)});
+if(RM){drawBg(0);drawScope(0)}else{requestAnimationFrame(drawBg);requestAnimationFrame(drawScope)}
+</script>
+</body>
+</html>

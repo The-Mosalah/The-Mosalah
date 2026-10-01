@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 96" role="img" aria-label="Animated field note circuit frame">
+<style>
+.trace{fill:none;stroke:#c9803f;stroke-width:2;stroke-linecap:round;stroke-dasharray:18 12;animation:dash 3.4s linear infinite}.trace2{fill:none;stroke:#34a8ff;stroke-width:2;stroke-linecap:round;stroke-dasharray:10 18;animation:dash 4.6s linear infinite reverse}.dot{fill:#c9803f;animation:pulse 1.7s ease-in-out infinite}.dot.b{fill:#34a8ff;animation:pulse 1.7s .55s ease-in-out infinite}@keyframes dash{to{stroke-dashoffset:-120}}@keyframes pulse{0%,100%{opacity:.3;r:3}50%{opacity:1;r:6}}
+</style>
+<rect width="960" height="96" rx="18" fill="#061329"/>
+<path class="trace" d="M24 64H152V30H298H392V64H522V30H656H778V64H936"/>
+<path class="trace2" d="M24 78H96V46H230V78H356V46H472V78H596V46H728V78H936"/>
+<circle class="dot" cx="152" cy="30" r="4"/><circle class="dot b" cx="298" cy="30" r="4"/><circle class="dot" cx="522" cy="30" r="4"/><circle class="dot b" cx="778" cy="64" r="4"/>
+<text x="36" y="26" fill="#d7e4f4" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="3">FIELD NOTE</text>
+<text x="924" y="26" fill="#92a5bb" font-family="Arial, sans-serif" font-size="12" text-anchor="end" letter-spacing="2">VTECH · HARDWARE</text>
+</svg>
